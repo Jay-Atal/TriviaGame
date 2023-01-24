@@ -1,11 +1,17 @@
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
+import static org.apache.commons.text.StringEscapeUtils.unescapeHtml4;
+
 
 public class Question {
 
@@ -72,7 +78,7 @@ public class Question {
 
 
                 String info = "";
-                info = informationString.substring(informationString.indexOf(",") + 1, informationString.length()-1);
+                info = informationString.substring(informationString.indexOf(",") + 1, informationString.length() - 1);
                 info = info.substring(info.indexOf(":") + 1);
 
 
@@ -86,21 +92,20 @@ public class Question {
                 JSONObject q = (JSONObject) dataObject.get(0);
 
 
-                category = (String) q.get("category");
-                type = (String) q.get("type");
-                difficulty = (String) q.get("difficulty");
-                question = (String) q.get("question");
-                correctAnswer = (String) q.get("correct_answer");
+                category = unescapeHtml4((String) q.get("category"));
+                type = unescapeHtml4((String) q.get("type"));
+                difficulty = unescapeHtml4((String) q.get("difficulty"));
+                question = unescapeHtml4((String) q.get("question"));
+                correctAnswer = unescapeHtml4((String) q.get("correct_answer"));
                 System.out.println(q.get("incorrect_answers"));
 
                 incorrectAnswers = (JSONArray) q.get("incorrect_answers");
 
                 listIncorrectAnswers = new ArrayList<>();
 
-                for(int i=0; i<incorrectAnswers.size(); i++) {
-                    listIncorrectAnswers.add((String)incorrectAnswers.get(i));
+                for (int i = 0; i < incorrectAnswers.size(); i++) {
+                    listIncorrectAnswers.add(unescapeHtml4((String) incorrectAnswers.get(i)));
                 }
-
 
 
             }
@@ -123,7 +128,6 @@ public class Question {
         toReturn.append(correctAnswer);
         toReturn.append("\n");
 
-//
         for (int i = 0; i < listIncorrectAnswers.size(); i++) {
             toReturn.append(listIncorrectAnswers.get(i));
             if (i == listIncorrectAnswers.size() - 1) {
