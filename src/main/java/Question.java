@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -47,8 +48,63 @@ public class Question {
 
     private int correctAnswerIndex;
 
+    private String[] answerOptions;
+
     private ArrayList<String> listIncorrectAnswers;
 
+    public static String getToken() {
+        return token;
+    }
+
+    private static String token;
+
+    public static void setToken() {
+        String t = "";
+
+        try {
+            URL url = new URL("https://opentdb.com/api_token.php?command=request");
+
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            //Check if connect is made
+            int responseCode = conn.getResponseCode();
+
+            // 200 OK
+            if (responseCode != 200) {
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+
+                StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    informationString.append(scanner.nextLine());
+                }
+                //Close the scanner
+                scanner.close();
+
+
+                JSONParser parse = new JSONParser();
+                JSONObject dataObject = (JSONObject) parse.parse(String.valueOf(informationString));
+
+
+                t = (String) dataObject.get("token");
+
+
+            }
+        } catch (Exception e) {
+            System.err.println("There was an error with getting the token.");
+        }
+        token = t;
+        System.out.println(token);
+    }
+
+    static {
+        setToken();
+    }
 
     public Question(String apiUrl) {
 
@@ -56,10 +112,11 @@ public class Question {
         //https://gist.github.com/Da9el00/e8b1c2e5185e51413d9acea81056c2f9
         //Modified the code the above on how to manipulate JSON from APIs.
         try {
-            new Session();
-            String token = Session.getToken();
+//            new Session();
+//            String token = Session.getToken();
+            // Question.setToken();
+            System.out.println(token);
             URL url = new URL((apiUrl + "&token=" + token));
-
 
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -114,17 +171,33 @@ public class Question {
                     listIncorrectAnswers.add(unescapeHtml4((String) incorrectAnswers.get(i)));
                 }
 
+                Random random = new Random();
+                correctAnswerIndex = random.nextInt(0, incorrectAnswers.size() - 1);
+
+                answerOptions = new String[1 + incorrectAnswers.size()];
+
+                answerOptions[correctAnswerIndex] = correctAnswer + " correct";
+
+                int j = 0;
+                for (int i = 0; i < answerOptions.length; i++) {
+                    if (i != correctAnswerIndex) {
+                        answerOptions[i] = (String) incorrectAnswers.get(j);
+                        j++;
+                    }
+                }
 
             }
         } catch (Exception e) {
             System.err.println("There was an error with getting the question.");
         }
+
+
     }
 
     public String toString() {
         StringBuilder toReturn = new StringBuilder();
 
-        toReturn.append(category);
+        /*toReturn.append(category);
         toReturn.append("\n");
         toReturn.append(type);
         toReturn.append("\n");
@@ -133,73 +206,34 @@ public class Question {
         toReturn.append(question);
         toReturn.append("\n");
         toReturn.append(correctAnswer);
-        toReturn.append("\n");
+        toReturn.append("\n");*/
 
-        for (int i = 0; i < listIncorrectAnswers.size(); i++) {
-            toReturn.append(listIncorrectAnswers.get(i));
-            if (i == listIncorrectAnswers.size() - 1) {
+        toReturn.append("Category: " + category + "\n");
+        toReturn.append("Difficulty: " + difficulty + "\n");
+        toReturn.append("Question: " + question + "\n");
+
+        for (int i = 0; i < answerOptions.length; i++) {
+            toReturn.append((i + 1) + ". " + answerOptions[i]);
+
+            if (i == answerOptions.length - 1) {
                 break;
             }
+
             toReturn.append("\n");
         }
+
+
+//        for (int i = 0; i < listIncorrectAnswers.size(); i++) {
+//            toReturn.append(listIncorrectAnswers.get(i));
+//            if (i == listIncorrectAnswers.size() - 1) {
+//                break;
+//            }
+//            toReturn.append("\n");
+//        }
 
         return toReturn.toString();
     }
 
-    static class Session {
-
-        private static String token;
-
-        public static String getToken() {
-            return token;
-        }
-
-        public Session() {
-            String token = "";
-
-            try {
-                URL url = new URL("https://opentdb.com/api_token.php?command=request");
-
-
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.connect();
-
-                //Check if connect is made
-                int responseCode = conn.getResponseCode();
-
-                // 200 OK
-                if (responseCode != 200) {
-                    throw new RuntimeException("HttpResponseCode: " + responseCode);
-                } else {
-
-                    StringBuilder informationString = new StringBuilder();
-                    Scanner scanner = new Scanner(url.openStream());
-
-                    while (scanner.hasNext()) {
-                        informationString.append(scanner.nextLine());
-                    }
-                    //Close the scanner
-                    scanner.close();
-
-
-                    JSONParser parse = new JSONParser();
-                    JSONObject dataObject = (JSONObject) parse.parse(String.valueOf(informationString));
-
-
-
-                    token = (String) dataObject.get("token");
-
-
-
-                }
-            } catch (Exception e) {
-                System.err.println("There was an error with getting the token.");
-            }
-            this.token = token;
-            System.out.println(token);
-        }
-    }
 }
 
 

@@ -16,7 +16,11 @@ public class Main {
         Question test = new Question("https://opentdb.com/api.php?amount=1");
         System.out.println(test);
 
-        Question.Session s = new Question.Session();
+
+        Question test2 = new Question("https://opentdb.com/api.php?amount=1");
+        System.out.println(test2);
+
+
     }
 
 }

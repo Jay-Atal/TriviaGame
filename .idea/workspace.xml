@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450bf8fd-c906-4352-86c6-b9bcdea1a4fe" name="Changes" comment="Implemented unescaping the HTML characters.">
+    <list default="true" id="450bf8fd-c906-4352-86c6-b9bcdea1a4fe" name="Changes" comment="Implemented  Auth Token from the API that would eliminate having duplicate questions in one session.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Question.java" afterDir="false" />
@@ -67,7 +67,7 @@
       <updated>1674545662049</updated>
       <workItem from="1674545663145" duration="2013000" />
       <workItem from="1674548869757" duration="39000" />
-      <workItem from="1674553930623" duration="14696000" />
+      <workItem from="1674553930623" duration="20432000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1674545961655</created>
@@ -90,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674600987387</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implemented  Auth Token from the API that would eliminate having duplicate questions in one session.">
+      <created>1674610300532</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1674610300532</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,6 +130,7 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Added parsing the JSON from the API call and assigning it to variables in Question class and ran a test in Main class." />
     <MESSAGE value="Implemented unescaping the HTML characters." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented unescaping the HTML characters." />
+    <MESSAGE value="Implemented  Auth Token from the API that would eliminate having duplicate questions in one session." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented  Auth Token from the API that would eliminate having duplicate questions in one session." />
   </component>
 </project>
