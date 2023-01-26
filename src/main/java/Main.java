@@ -1,25 +1,26 @@
+import java.util.Scanner;
 public class Main {
 
+    public static void playGame(){
+        while(true){
+            Question q = new Question("https://opentdb.com/api.php?amount=1");
+            System.out.println(q);
+            Scanner kb = new Scanner(System.in);
+            int answer = kb.nextInt();
+
+            if(!q.checkAnswer(answer)){
+                break;
+            }
+
+
+        }
+    }
+
     public static void main(String[] args) {
+        //Question test = new Question("https://opentdb.com/api.php?amount=1");
+        //System.out.println(test);
 
-        /*
-        Maven dependency for JSON-simple:
-            <dependency>
-                <groupId>com.googlecode.json-simple</groupId>
-                <artifactId>json-simple</artifactId>
-                <version>1.1.1</version>
-            </dependency>
-         */
-
-        //
-
-        Question test = new Question("https://opentdb.com/api.php?amount=1");
-        System.out.println(test);
-
-
-        Question test2 = new Question("https://opentdb.com/api.php?amount=1");
-        System.out.println(test2);
-
+        playGame();
 
     }
 

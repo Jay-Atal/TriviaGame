@@ -15,28 +15,6 @@ import static org.apache.commons.text.StringEscapeUtils.unescapeHtml4;
 
 public class Question {
 
-
-//    {
-//        "response_code":0,
-//        "results":[{
-//            "category":"Entertainment: Japanese Anime & Manga",
-//            "type":"multiple",
-//            "difficulty":"medium",
-//            "question":"In Dragon Ball Z, who was the first character to go Super Saiyan 2?",
-//            "correct_answer":"Gohan",
-//            "incorrect_answers":["Goku", "Vegeta", "Trunks"]
-//            }
-//        ]
-//    }
-
-
-//        "category":"History",
-//        "type":"multiple",
-//        "difficulty":"medium",
-//        "question":"Who was the leader of the Communist Party of Yugoslavia ?",
-//        "correct_answer":"Josip Broz Tito",
-//        "incorrect_answers":["Karadjordje Petrovic", "Milos Obilic", "Aleskandar Petrovic"]
-
     private String category;
     private String type;
 
@@ -112,10 +90,7 @@ public class Question {
         //https://gist.github.com/Da9el00/e8b1c2e5185e51413d9acea81056c2f9
         //Modified the code the above on how to manipulate JSON from APIs.
         try {
-//            new Session();
-//            String token = Session.getToken();
-            // Question.setToken();
-            System.out.println(token);
+
             URL url = new URL((apiUrl + "&token=" + token));
 
 
@@ -168,7 +143,7 @@ public class Question {
                 listIncorrectAnswers = new ArrayList<>();
 
                 for (int i = 0; i < incorrectAnswers.size(); i++) {
-                    listIncorrectAnswers.add(unescapeHtml4((String) incorrectAnswers.get(i)));
+                    listIncorrectAnswers.add(unescapeHtml4(((String) incorrectAnswers.get(i))));
                 }
 
                 Random random = new Random();
@@ -193,20 +168,11 @@ public class Question {
 
 
     }
-
+    public boolean checkAnswer(int ans){
+        return ans == correctAnswerIndex + 1;
+    }
     public String toString() {
         StringBuilder toReturn = new StringBuilder();
-
-        /*toReturn.append(category);
-        toReturn.append("\n");
-        toReturn.append(type);
-        toReturn.append("\n");
-        toReturn.append(difficulty);
-        toReturn.append("\n");
-        toReturn.append(question);
-        toReturn.append("\n");
-        toReturn.append(correctAnswer);
-        toReturn.append("\n");*/
 
         toReturn.append("Category: " + category + "\n");
         toReturn.append("Difficulty: " + difficulty + "\n");
@@ -221,15 +187,6 @@ public class Question {
 
             toReturn.append("\n");
         }
-
-
-//        for (int i = 0; i < listIncorrectAnswers.size(); i++) {
-//            toReturn.append(listIncorrectAnswers.get(i));
-//            if (i == listIncorrectAnswers.size() - 1) {
-//                break;
-//            }
-//            toReturn.append("\n");
-//        }
 
         return toReturn.toString();
     }
